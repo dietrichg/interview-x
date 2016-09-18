@@ -15,7 +15,7 @@ var connection = mysql.createConnection({
   database : 'interview_x'
 });
 
-// connect to mySQL
+// Connect to mySQL
 connection.connect(function(error){
   if( !!error ){
     console.log('Error while connecting.');
@@ -27,7 +27,20 @@ connection.connect(function(error){
 });
 
 // Routing
-require('./routes')(app);
+// Main Entrance point.
+app.get('/', function(req, res){
+  res.render('index.jade');
+});
+
+// Api calls..
+app.get('/api/matches',function(req, res){
+  connection.query('SELECT * FROM matches',function(err,rows){
+    if(err) throw err;
+    res.json(rows);
+  });
+});
+
+/**/
 
 // Start App
 app.listen(1337);

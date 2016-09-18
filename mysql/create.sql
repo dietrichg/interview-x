@@ -7,10 +7,10 @@ CREATE TABLE matches (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 INSERT INTO matches (id, team, score, match_date) VALUES
-(1, 'Jaguars', '20-1', '2016-08-21 14:00:00'),
-(2, 'Hornets', '5-20', '2016-08-21 14:00:00'),
-(3, 'Bobcats', '29-20', '2016-08-21 14:00:00'),
-(4, 'Lightning', '40-10', '2016-08-21 14:00:00');
+(1, 'Jaguars vs Vikings', '20-1', '2016-08-21 14:00:00'),
+(2, 'Hornets vs Shields', '5-20', '2016-08-21 14:00:00'),
+(3, 'Bobcats vs Stampede', '29-20', '2016-08-21 14:00:00'),
+(4, 'Lightning vs Quakes', '40-10', '2016-08-21 14:00:00');
 
 
 CREATE TABLE users (

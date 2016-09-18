@@ -1,10 +1,14 @@
-var fs = require('fs');
-
 module.exports = function(app){
-  fs.readdirSync(__dirname).forEach(function(file) {
-     if (file === "index.js" || file.substr(file.lastIndexOf('.') + 1) !== 'js')
-         return;
-     var name = file.substr(0, file.indexOf('.'));
-     require('./' + name)(app);
+
+  // Index..
+  app.get('/', function(req, resp){
+
+    connection.query('SELECT * FROM matches',function(err,rows){
+      if(err) throw err;
+
+      console.log('Data received from Db:\n');
+      resp.send('Row Count:' + rows.length);
+    });
   });
+
 }
