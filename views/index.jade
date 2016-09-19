@@ -3,18 +3,37 @@ html(ng-app='soccerApp')
   head
     title= title
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css')
+    script(src='//code.jquery.com/jquery-2.2.4.min.js')
+    script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
-    script(src='core.js')
+    script(src='../core.js')
 
   body(ng-controller='mainController as main')
     div.container
       div.jumbotron.text-center
         h1 Welcome to Soccer.io!
         h3 There are currently <b>{{matches.length}}</b> matches registered in the system.
+        if(user)
+          a(href='/logout').btn.btn-primary.btn-lg Logout
+        else
+          a(href='/login').btn.btn-primary.btn-lg Login
+          a(href='/signup').btn.btn-default.btn-lg Sign Up          
 
       div.body-wrapper.row
-      div#soccer-list.col-sm-6.col-sm-offset-3
-        h3 Matches
-        ul(ng-repeat='match in matches')
-            li
-              span Lineup: <b>{{match.team}}</b> - Score: ({{match.score}}) - {{match.match_date}}
+        div#addNew.col-sm-5.col-sm-offset-3
+          if(user)
+            h3 Add New Match Data
+              form(action="/",method="post")
+                div.form-group
+                  input(name="team",placeholder="Lineup: eg. Jaguars vs Bobcats",required="true").form-control
+                div.form-group
+                  input(name="score",placeholder="Score: eg. 20-14",required="true").form-control
+                div.form-group  
+                  input(name="match_date",placeholder="Date: 7/1/2016",required="true").form-control
+                div.form-group
+                  input(type="submit",value="Add").btn.btn-primary.btn-small
+        div#soccer-list.col-sm-9.col-sm-offset-3          
+          h3 Matches
+          ul(ng-repeat='match in matches')
+              li
+                span <b>{{match.team}}</b> - Score: ({{match.score}}) - <i>{{formatDate(match.match_date)}}</i>

@@ -1,46 +1,37 @@
 var express = require('express');
-var mysql   = require('mysql');
 var session = require('express-session');
-
+var mysql   = require('mysql');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var passport = require('passport');
+var flash   = require('connect-flash');
+var LocalStrategy = require('passport-local');
 var app     = express();
+var port    = process.env.PORT || 1337;
+
+
+// Passport Configuration
+require('./config/passport')(passport); // pass passport for configuration
 
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
+app.use(bodyParser.json());
 app.set('view engine', 'jade');
 
-// DB
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'interview_x'
-});
-
-// Connect to mySQL
-connection.connect(function(error){
-  if( !!error ){
-    console.log('Error while connecting.');
-    process.exit(1);
-  }
-  else{
-    console.log('Successfully connected to MySQL db.');
-  }
-});
+// Passport Set Up
+app.use(session({
+	secret: 'vidyapathaisalwaysrunning', // Ideally we would store this elsewhere..
+	resave: true,
+	saveUninitialized: true
+} ));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 // Routing
-// Main Entrance point.
-app.get('/', function(req, res){
-  res.render('index.jade');
-});
-
-// Api calls..
-app.get('/api/matches',function(req, res){
-  connection.query('SELECT * FROM matches',function(err,rows){
-    if(err) throw err;
-    res.json(rows);
-  });
-});
-
-/**/
+require('./routes/index.js')(app, passport);
 
 // Start App
-app.listen(1337);
+app.listen(port);

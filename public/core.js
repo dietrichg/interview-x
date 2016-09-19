@@ -12,9 +12,9 @@ function mainController($scope, $http){
       console.log('Error: ' + data);
     });
 
-  $scope.formatDate = function(date){
-    var t = "2010-06-09 13:12:01".split(/[- :]/),
-        d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
-    return 123;
+  $scope.formatDate = function(datetime){
+    var d = new Date(datetime);
+    return (d.getMonth() + 1).toString() + '/' + d.getDate().toString() + '/' + d.getFullYear().toString();
   }
+
 }

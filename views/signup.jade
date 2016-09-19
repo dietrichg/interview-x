@@ -1,0 +1,27 @@
+doctype html
+html(ng-app='soccerApp')
+  head
+    title= title
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css')
+    script(src='//code.jquery.com/jquery-2.2.4.min.js')
+    script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
+    script(src='../core.js')
+
+  body(ng-controller='mainController as main')
+            
+    div.container
+      div.jumbotron.text-center
+        h1 Welcome to Soccer.io!
+        h3 There are currently <b>{{matches.length}}</b> matches registered in the system.
+
+      div.body-wrapper.row
+      div#soccer-list.col-sm-6.col-sm-offset-3
+        if(message.length > 0)        
+          div.alert.alert-danger Error:#{message}
+        form#loginForm(action="/signup",method="post")
+          input(name='username',type='text',placeholder="Username").form-control
+          input(name='password',type='password',placeholder="Password").form-control            
+          div.modal-footer
+            a.btn.btn-default(href="/") Cancel
+            input(type='submit',value='Sign Up')#loginButton.btn.btn-primary
